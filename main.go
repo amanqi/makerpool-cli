@@ -1,70 +1,22 @@
+/*
+Copyright © 2019 Bruno Brito <bruno@amanqi.me>
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 package main
 
-import (
-	"fmt"
-	"log"
-	"os"
-
-	wip "./wip"
-	"github.com/urfave/cli"
-)
+import "github.com/amanqi/makerpool-cli/cmd"
 
 func main() {
-	app := cli.NewApp()
-	app.Name = "makerpool-cli"
-	app.Usage = "manage maker's resources"
-	app.Version = "0.1"
-
-	allFlags := []cli.Flag{
-		cli.StringFlag{
-			Name:  "platform, p",
-			Usage: "set maker platform: wip",
-		},
-		cli.BoolFlag{
-			Name:  "json",
-			Usage: "output data in JSON",
-		},
-	}
-	app.Flags = allFlags
-
-	app.Commands = []cli.Command{
-		{
-			Name:    "profile",
-			Aliases: []string{"p"},
-			Usage:   "show authenticated user's profile",
-			Action: func(c *cli.Context) error {
-				outputFormat := ""
-				if c.Bool("json") {
-					outputFormat = "json"
-				}
-				if c.String("platform") == "" {
-					return fmt.Errorf("platform not specified")
-				}
-
-				switch c.String("platform") {
-				case "wip":
-					err := wip.ShowProfile(outputFormat)
-					if err != nil {
-						return err
-					}
-
-				default:
-					return fmt.Errorf(fmt.Sprintf("platform %s not supported",
-						c.String("platform")))
-				}
-
-				return nil
-			},
-			Flags: allFlags,
-		},
-	}
-
-	err := app.Run(os.Args)
-	fatal(err)
-}
-
-func fatal(err error) {
-	if err != nil {
-		log.Fatal(err)
-	}
+	cmd.Execute()
 }
