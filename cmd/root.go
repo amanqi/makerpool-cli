@@ -35,9 +35,6 @@ var rootCmd = &cobra.Command{
 	Long: `A command line interface to manage resources
 on your favorite maker platforms (only supports https://wip.chat for now)
 Complete documentation is available at https://github.com/amanqi/makerpool-cli/`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	//	Run: func(cmd *cobra.Command, args []string) { },
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
